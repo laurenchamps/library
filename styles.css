@@ -1,3 +1,5 @@
+/* Reset */
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -8,17 +10,79 @@
     font: inherit;
 }
 
+/* Custom properties */
+
+:root {
+    --primary-bg-color: #124559;
+    --secondary-bg-color: #01161E;
+    --tertiary-bg-color: #E8EBEC;
+
+    --accent-color: #AEC3B0;
+
+    --primary-text-color: #F4F6EF;
+    --secondary-text-color: #01161E;
+}
+
+/* General typography */
+
 body {
-    min-height: 100vh;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: system-ui, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
     line-height: 1.4;
+    background-color: var(--primary-bg-color);
+    color: var(--primary-text-color);
 }
 
-img, picture, svg, video {
-    display: block;
-    max-width: 100%;
+h1 {
+    font-size: 3rem;
 }
 
-input, textarea, button, select {
-    font: inherit;
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Header */
+
+header {
+    background-color: var(--secondary-bg-color);
+    padding: 2rem 0;
+}
+
+/* Main */
+
+main {
+    display: grid;
+    grid-template-rows: 6rem 1fr;
+}
+
+.section-one {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.6rem 0;
+}
+
+button {
+    padding: 0.6rem 2rem;
+    border-radius: 5px;
+    border: none;
+}
+
+#addBook {
+    font-size: 1.4rem;
+    font-weight: bold;
+    background-color: var(--accent-color);
+}
+
+.card-group {
+    display: grid;
+    gap: 5rem;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.card {
+    background-color: var(--tertiary-bg-color);
+    color: var(--secondary-text-color);
+    border-radius: 10px;
+    padding: 1.2rem;
 }
