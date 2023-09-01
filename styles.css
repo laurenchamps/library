@@ -15,7 +15,8 @@
 :root {
     --primary-bg-color: #124559;
     --secondary-bg-color: #01161E;
-    --tertiary-bg-color: #E8EBEC;
+    --tertiary-bg-color: #598392;
+    --light-bg-color: #E8EBEC;
 
     --accent-color: #AEC3B0;
 
@@ -30,6 +31,7 @@ body {
     line-height: 1.4;
     background-color: var(--primary-bg-color);
     color: var(--primary-text-color);
+    line-height: 1.5;
 }
 
 h1 {
@@ -72,17 +74,33 @@ button {
     font-size: 1.4rem;
     font-weight: bold;
     background-color: var(--accent-color);
+    color: var(--secondary-text-color);
 }
 
 .card-group {
     display: grid;
-    gap: 5rem;
-    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
 }
 
 .card {
-    background-color: var(--tertiary-bg-color);
+    background-color: var(--light-bg-color);
     color: var(--secondary-text-color);
     border-radius: 10px;
     padding: 1.2rem;
+}
+
+.card .title {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.card .author {
+    font-size: 1.2rem;
+}
+
+.card .read {
+    background-color: var(--tertiary-bg-color);
+    color: var(--primary-text-color);
+    margin-top: 1rem;
 }
