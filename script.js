@@ -47,23 +47,33 @@ function addBookToLibrary(e) {
         pages.className = 'pages';
         pages.appendChild(document.createTextNode(item.pages + ' pages'));
 
-        const readBtn = document.createElement('button');
+        const toggleDiv = document.createElement('div');
+        toggleDiv.className = 'toggle-checkbox';
+
+        const toggleLabel = document.createElement('label');
+        toggleLabel.setAttribute('for', 'toggle');
+        toggleLabel.appendChild(document.createTextNode('read?'));
+        
+        const toggleInput = document.createElement('input')
+        toggleInput.setAttribute('type', 'checkbox');
+        toggleInput.setAttribute('name', 'isRead');
+        toggleInput.setAttribute('id', 'toggle');
+        toggleInput.className = 'toggle';
+
+        toggleDiv.appendChild(toggleLabel);
+        toggleDiv.appendChild(toggleInput);
+
         if (item.isRead === true) {
-            readBtn.className = 'is-read read';
-            readBtn.appendChild(document.createTextNode('Read'));
-        } else {
-            readBtn.className = 'is-read unread';
-            readBtn.appendChild(document.createTextNode('Mark as read'));
-        }
+            toggleInput.checked = true;
+        } 
 
         card.appendChild(title);
         card.appendChild(author);
         card.appendChild(pages);
-        card.appendChild(readBtn);
+        card.appendChild(toggleDiv);
 
         
         cardGroup.appendChild(card);
-        console.log(card);
     })
 }
 
