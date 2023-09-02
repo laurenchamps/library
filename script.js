@@ -19,10 +19,23 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead
 }
 
+const theHobbit = new Book('The Hobbit', 'JRR Tolkien', 700, true);
+const nineteenEightyFour = new Book('1984', 'George Orwell', 400, true);
+
+myLibrary.push(theHobbit);
+myLibrary.push(nineteenEightyFour);
 
 console.log(myLibrary);
 
+
+
+
 function addBookToLibrary() {
+
+    while (cardGroup.firstChild) {
+        cardGroup.removeChild(cardGroup.firstChild);
+    }
+    
     myLibrary.forEach(function(item) {
         // Create card
         const card = document.createElement('div');
@@ -85,14 +98,22 @@ function getBookInfo(e) {
         bookIsRead
     )
 
-    myLibrary.push(newBook);
-
-    console.log(myLibrary);
+    if (myLibrary.some(item => item.title === title.value)) {
+        alert('There is already a book with this title in your library');
+    } else {
+        myLibrary.push(newBook);
+    }
 
     addBookToLibrary();
+
+    // Reset values
+
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    isRead.checked = false;
 }
 
-// addBookToLibrary();
 
 // Event listeners
 
