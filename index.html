@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <script src="script.js" defer></script>
+    <script src="https://kit.fontawesome.com/01b2390a4f.js" crossorigin="anonymous"></script>
     <title>my library</title>
 </head>
 <body>
@@ -16,12 +17,31 @@
     <main>
         <div class="container">
             <section class="section-one">
-                <button id="addBook">Add book</button>
+                <button id="addBook" class="open-modal">Add book</button>
             </section>
             <section class="card-group">
             
             </section>
         </div>
+        <dialog class="modal" id="modal">
+            <form action="" class="book-form" method="dialog">
+                <div class="form-header">
+                    <h2>Enter book details</h2>
+                    <i class="fa-regular fa-circle-xmark close-modal"></i>
+                </div>
+                <label for="book-title">Title</label>
+                <input type="text" id="book-title" name="title" required placeholder="Animal Farm">
+                <label for="book-author">Author</label>
+                <input type="text" id="book-author" name="author" required placeholder="George Orwell">
+                <label for="book-pages">Pages</label>
+                <input type="number" id="book-pages" name="pages" required>
+                <div class="checkbox-input">
+                    <label for="read-checkbox">Have you read it?</label>
+                    <input type="checkbox" id="read-checkbox" name="read">
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </dialog>
     </main>
 </body>
 </html>

@@ -1,4 +1,9 @@
 const myLibrary = [];
+const modal = document.querySelector('dialog');
+const openModal = document.querySelector('.open-modal');
+const closeModal = document.querySelector('.close-modal');
+
+console.log(modal);
 
 const cardGroup = document.querySelector('.card-group');
 
@@ -85,3 +90,13 @@ function addBookToLibrary(e) {
 }
 
 addBookToLibrary();
+
+// Event listeners
+
+openModal.addEventListener('click', () => {
+    modal.showModal();
+})
+
+closeModal.addEventListener('click', () => {
+    modal.close();
+})

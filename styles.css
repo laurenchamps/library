@@ -38,6 +38,10 @@ h1 {
     font-size: 3rem;
 }
 
+h2 {
+    font-size: 1.6rem;
+}
+
 .container {
     width: 80%;
     margin: 0 auto;
@@ -69,6 +73,7 @@ button {
     padding: 0.6rem 2rem;
     border-radius: 5px;
     border: none;
+    background-color: var(--accent-color);
 }
 
 #addBook {
@@ -145,6 +150,52 @@ input.toggle:checked::after {
     display: flex;
     align-items: center;
     justify-content: end;
+}
+
+/* Modal */
+
+.modal {
+    max-width: 80%;
+    margin: 0 auto;
+    background-color: var(--light-bg-color);
+    color: var(--secondary-text-color);
+    border: none;
+    border-radius: 10px;
+    padding: 2rem;
+    top: 15%;
+}
+
+.modal::backdrop {
+    background: #000;
+    opacity: 30%;
+}
+
+.book-form {
+    display: grid;
+    gap: 0.2rem;
+}
+
+.form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5rem;
+}
+
+.close-modal {
+    cursor: pointer;
+}
+
+.book-form > label,
+.book-form > div,
+.book-form > button {
+    margin-block-start: 1rem;;
+}
+
+.checkbox-input {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 
