@@ -21,11 +21,18 @@ const newBook2 = new Book(
     'Yiyun Li',
     250,
     false
+)
 
+const newBook3 = new Book(
+    "Percy Pig & Friends",
+    'Percy Pig',
+    2,
+    true
 )
 
 myLibrary.push(newBook);
 myLibrary.push(newBook2);
+myLibrary.push(newBook3);
 
 console.log(myLibrary);
 

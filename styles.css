@@ -14,11 +14,11 @@
 
 :root {
     --primary-bg-color: #124559;
-    --secondary-bg-color: #01161E;
-    --tertiary-bg-color: #598392;
-    --light-bg-color: #E8EBEC;
+    --secondary-bg-color: #061e27;
+    --tertiary-bg-color: #aec3b0;
+    --light-bg-color: #E2E2E2;
 
-    --accent-color: #AEC3B0;
+    --accent-color: #ff5791;
 
     --primary-text-color: #F4F6EF;
     --secondary-text-color: #01161E;
@@ -47,6 +47,7 @@ h1 {
 
 header {
     background-color: var(--secondary-bg-color);
+    color: var(--primary-text-color);
     padding: 2rem 0;
 }
 
@@ -133,7 +134,7 @@ input.toggle::after {
 }
 
 input.toggle:checked {
-    background-color: var(--accent-color);
+    background-color: var(--tertiary-bg-color);
 }
 
 input.toggle:checked::after {
