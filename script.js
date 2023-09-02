@@ -1,9 +1,14 @@
 const myLibrary = [];
+
 const modal = document.querySelector('dialog');
 const openModal = document.querySelector('.open-modal');
 const closeModal = document.querySelector('.close-modal');
+const submit = document.querySelector('#submit');
 
-console.log(modal);
+const title = document.getElementById('book-title');
+const author = document.getElementById('book-author');
+const pages = document.getElementById('book-pages');
+const isRead = document.getElementById('read-checkbox');
 
 const cardGroup = document.querySelector('.card-group');
 
@@ -14,34 +19,10 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead
 }
 
-const newBook = new Book(
-    'Violeta', 
-    'Isabel Allende', 
-    259, 
-    true
-);
-
-const newBook2 = new Book(
-    "Wednesday's Child",
-    'Yiyun Li',
-    250,
-    false
-)
-
-const newBook3 = new Book(
-    "Percy Pig & Friends",
-    'Percy Pig',
-    2,
-    true
-)
-
-myLibrary.push(newBook);
-myLibrary.push(newBook2);
-myLibrary.push(newBook3);
 
 console.log(myLibrary);
 
-function addBookToLibrary(e) {
+function addBookToLibrary() {
     myLibrary.forEach(function(item) {
         // Create card
         const card = document.createElement('div');
@@ -89,7 +70,29 @@ function addBookToLibrary(e) {
     })
 }
 
-addBookToLibrary();
+function getBookInfo(e) {
+    e.preventDefault();
+
+    const bookTitle = title.value;
+    const bookAuthor = author.value;
+    const bookPages = Number(pages.value);
+    let bookIsRead = isRead.checked;
+
+    const newBook = new Book(
+        bookTitle,
+        bookAuthor,
+        bookPages,
+        bookIsRead
+    )
+
+    myLibrary.push(newBook);
+
+    console.log(myLibrary);
+
+    addBookToLibrary();
+}
+
+// addBookToLibrary();
 
 // Event listeners
 
@@ -100,3 +103,5 @@ openModal.addEventListener('click', () => {
 closeModal.addEventListener('click', () => {
     modal.close();
 })
+
+submit.addEventListener('click', getBookInfo);
