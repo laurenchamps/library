@@ -28,14 +28,12 @@ myLibrary.push(nineteenEightyFour);
 console.log(myLibrary);
 
 
-
-
 function addBookToLibrary() {
 
     while (cardGroup.firstChild) {
         cardGroup.removeChild(cardGroup.firstChild);
     }
-    
+
     myLibrary.forEach(function(item) {
         // Create card
         const card = document.createElement('div');
@@ -98,8 +96,8 @@ function getBookInfo(e) {
         bookIsRead
     )
 
-    if (myLibrary.some(item => item.title === title.value)) {
-        alert('There is already a book with this title in your library');
+    if (myLibrary.some(item => item.title === bookTitle && item.author === bookAuthor)) {
+        alert('Book already exists in your library') 
     } else {
         myLibrary.push(newBook);
     }
