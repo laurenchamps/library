@@ -28,32 +28,35 @@ myLibrary.push(nineteenEightyFour);
 console.log(myLibrary);
 
 
-function addBookToLibrary() {
-
+function displayLibrary() {
+    // Remove all existing book cards
     while (cardGroup.firstChild) {
         cardGroup.removeChild(cardGroup.firstChild);
     }
 
-    myLibrary.forEach(function(item) {
+    // Add card for each book in library
+    myLibrary.forEach(function(item, index) {
+
         // Create card
         const card = document.createElement('div');
         card.className = 'card';
+        card.setAttribute('id', index);
 
         const title = document.createElement('p');
         title.className = 'title';
         title.appendChild(document.createTextNode(item.title));
-
+    
         const author = document.createElement('p');
         author.className = 'author';
         author.appendChild(document.createTextNode(item.author));
-
+    
         const pages = document.createElement('p');
         pages.className = 'pages';
         pages.appendChild(document.createTextNode(item.pages + ' pages'));
 
         const toggleDiv = document.createElement('div');
         toggleDiv.className = 'toggle-checkbox';
-
+    
         const toggleLabel = document.createElement('label');
         toggleLabel.setAttribute('for', 'toggle');
         toggleLabel.appendChild(document.createTextNode('read?'));
@@ -63,7 +66,7 @@ function addBookToLibrary() {
         toggleInput.setAttribute('name', 'isRead');
         toggleInput.setAttribute('id', 'toggle');
         toggleInput.className = 'toggle';
-
+    
         toggleDiv.appendChild(toggleLabel);
         toggleDiv.appendChild(toggleInput);
 
@@ -81,7 +84,8 @@ function addBookToLibrary() {
     })
 }
 
-function getBookInfo(e) {
+
+function addBookToLibrary(e) {
     e.preventDefault();
 
     const bookTitle = title.value;
@@ -102,7 +106,7 @@ function getBookInfo(e) {
         myLibrary.push(newBook);
     }
 
-    addBookToLibrary();
+    displayLibrary();
 
     // Reset values
 
@@ -123,4 +127,4 @@ closeModal.addEventListener('click', () => {
     modal.close();
 })
 
-submit.addEventListener('click', getBookInfo);
+submit.addEventListener('click', addBookToLibrary);
