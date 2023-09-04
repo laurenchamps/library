@@ -4,6 +4,7 @@ const modal = document.querySelector('dialog');
 const openModal = document.querySelector('.open-modal');
 const closeModal = document.querySelector('.close-modal');
 const submit = document.querySelector('#submit');
+const form = document.querySelector('.book-form');
 
 const title = document.getElementById('book-title');
 const author = document.getElementById('book-author');
@@ -158,7 +159,7 @@ closeModal.addEventListener('click', () => {
     modal.close();
 })
 
-submit.addEventListener('click', addBookToLibrary);
+form.addEventListener('submit', addBookToLibrary);
 
 
 
