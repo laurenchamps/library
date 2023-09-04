@@ -37,53 +37,58 @@ function displayLibrary() {
     // Add card for each book in library
     myLibrary.forEach(function(item, index) {
 
-        // Create card
+        // Create card and child elements
         const card = document.createElement('div');
+        const title = document.createElement('p');
+        const author = document.createElement('p');
+        const pages = document.createElement('p');
+        const toggleDiv = document.createElement('div');
+        const toggleLabel = document.createElement('label');
+        const toggleInput = document.createElement('input');
+        const removeBtn = document.createElement('button');
+        const btnGrp = document.createElement('div');
+
+        // Set attributes on elements
         card.className = 'card';
         card.setAttribute('id', index);
-
-        const title = document.createElement('p');
         title.className = 'title';
-        title.appendChild(document.createTextNode(item.title));
-    
-        const author = document.createElement('p');
         author.className = 'author';
-        author.appendChild(document.createTextNode(item.author));
-    
-        const pages = document.createElement('p');
         pages.className = 'pages';
-        pages.appendChild(document.createTextNode(item.pages + ' pages'));
-
-        const toggleDiv = document.createElement('div');
         toggleDiv.className = 'toggle-checkbox';
-    
-        const toggleLabel = document.createElement('label');
         toggleLabel.setAttribute('for', 'toggle');
-        toggleLabel.appendChild(document.createTextNode('read?'));
-        
-        const toggleInput = document.createElement('input')
         toggleInput.setAttribute('type', 'checkbox');
         toggleInput.setAttribute('name', 'isRead');
         toggleInput.setAttribute('id', 'toggle');
         toggleInput.className = 'toggle';
-    
-        toggleDiv.appendChild(toggleLabel);
-        toggleDiv.appendChild(toggleInput);
+        removeBtn.className = 'remove';
+        btnGrp.className = 'wrapper';
 
         if (item.isRead === true) {
             toggleInput.checked = true;
         } 
 
+        // Add text 
+        title.appendChild(document.createTextNode(item.title));
+        author.appendChild(document.createTextNode(item.author));
+        pages.appendChild(document.createTextNode(item.pages + ' pages'));
+        toggleLabel.appendChild(document.createTextNode('read?'));
+        removeBtn.appendChild(document.createTextNode('Remove'));
+
+        // Add elements to DOM
+        toggleDiv.appendChild(toggleLabel);
+        toggleDiv.appendChild(toggleInput);
+
+        btnGrp.appendChild(toggleDiv);
+        btnGrp.appendChild(removeBtn);
+
         card.appendChild(title);
         card.appendChild(author);
         card.appendChild(pages);
-        card.appendChild(toggleDiv);
+        card.appendChild(btnGrp);
 
-        
         cardGroup.appendChild(card);
     })
 }
-
 
 function addBookToLibrary(e) {
     e.preventDefault();
@@ -108,7 +113,7 @@ function addBookToLibrary(e) {
 
     displayLibrary();
 
-    // Reset values
+    // Reset form values
 
     title.value = '';
     author.value = '';
@@ -128,3 +133,5 @@ closeModal.addEventListener('click', () => {
 })
 
 submit.addEventListener('click', addBookToLibrary);
+
+window.addEventListener('load', displayLibrary);
