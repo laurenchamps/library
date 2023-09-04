@@ -54,7 +54,7 @@ function displayLibrary() {
         
         // Set attributes on elements
         card.className = 'card';
-        card.setAttribute('id', index);
+        card.setAttribute('data-index', index);
         title.className = 'title';
         author.className = 'author';
         pages.className = 'pages';
@@ -133,7 +133,7 @@ function addBookToLibrary(e) {
 }
     
 function removeBookFromLibrary(e) {
-    myLibrary.splice(e.target.parentElement.parentElement.id, 1);
+    myLibrary.splice(e.target.parentElement.parentElement.getAttribute('data-index'), 1);
 
     displayLibrary();
 }
@@ -141,10 +141,10 @@ function removeBookFromLibrary(e) {
 function toggleRead(e) {
     if(e.target.className.includes('read')) {
         e.target.classList.remove('read');
-        myLibrary[e.target.parentElement.parentElement.parentElement.id].isRead = false;
+        myLibrary[e.target.parentElement.parentElement.parentElement.getAttribute('data-index')].isRead = false;
     } else {
         e.target.classList.add('read');
-        myLibrary[e.target.parentElement.parentElement.parentElement.id].isRead = true;
+        myLibrary[e.target.parentElement.parentElement.parentElement.getAttribute('data-index')].isRead = true;
     };
 }
     
