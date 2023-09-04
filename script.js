@@ -73,6 +73,7 @@ function displayLibrary() {
         } 
 
         removeBtn.addEventListener('click', removeBookFromLibrary);
+        toggleInput.addEventListener('click', toggleRead);
         
         // Add text 
         title.appendChild(document.createTextNode(item.title));
@@ -100,7 +101,7 @@ function displayLibrary() {
 displayLibrary();
 
 function addBookToLibrary(e) {
-    // e.preventDefault();
+    e.preventDefault();
     
     const bookTitle = title.value;
     const bookAuthor = author.value;
@@ -135,6 +136,16 @@ function removeBookFromLibrary(e) {
     myLibrary.splice(e.target.parentElement.parentElement.id, 1);
 
     displayLibrary();
+}
+
+function toggleRead(e) {
+    if(e.target.className.includes('read')) {
+        e.target.classList.remove('read');
+        myLibrary[e.target.parentElement.parentElement.parentElement.id].isRead = false;
+    } else {
+        e.target.classList.add('read');
+        myLibrary[e.target.parentElement.parentElement.parentElement.id].isRead = true;
+    };
 }
     
 // Event listeners
