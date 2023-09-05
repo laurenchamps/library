@@ -24,14 +24,28 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead
 }
 
-// const theHobbit = new Book('The Hobbit', 'JRR Tolkien', 700, true);
-// const nineteenEightyFour = new Book('1984', 'George Orwell', 400, false);
+const mountain = new Book(
+    'The Living Mountain',
+    'Nan Shepherd',
+    114,
+    true
+)
 
-// myLibrary.push(theHobbit);
-// myLibrary.push(nineteenEightyFour);
+const wolves = new Book(
+    'Women Who Run With The Wolves',
+    'Clarissa Pinkola Estes',
+    513,
+    true
+)
 
-// console.log(myLibrary);
+const trial = new Book(
+    'The Trial',
+    'Franz Kafka',
+    178,
+    false
+)
 
+myLibrary.push(mountain, wolves, trial);
 
 function displayLibrary() {
     // Remove all existing book cards
