@@ -24,13 +24,13 @@ function Book(title, author, pages, isRead) {
     this.isRead = isRead
 }
 
-const theHobbit = new Book('The Hobbit', 'JRR Tolkien', 700, true);
-const nineteenEightyFour = new Book('1984', 'George Orwell', 400, false);
+// const theHobbit = new Book('The Hobbit', 'JRR Tolkien', 700, true);
+// const nineteenEightyFour = new Book('1984', 'George Orwell', 400, false);
 
-myLibrary.push(theHobbit);
-myLibrary.push(nineteenEightyFour);
+// myLibrary.push(theHobbit);
+// myLibrary.push(nineteenEightyFour);
 
-console.log(myLibrary);
+// console.log(myLibrary);
 
 
 function displayLibrary() {
@@ -58,8 +58,6 @@ function displayLibrary() {
         author.className = 'author';
         pages.className = 'pages';
         toggleBtn.className = 'toggle';
-        toggleBtn.setAttribute('type', 'button');
-
         removeBtn.className = 'remove';
         btnGrp.className = 'button-group';
         
