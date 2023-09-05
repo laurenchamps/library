@@ -43,9 +43,34 @@ h2 {
     font-size: 1.6rem;
 }
 
+a:visited,
+a:link {
+    color: #fff;
+}
+
+/* General layout */
+
 .container {
     width: 80%;
     margin: 0 auto;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+footer {
+    text-align: center;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    padding-top: 2em;
+    padding-bottom: 0.5em;
 }
 
 /* Header */
@@ -57,11 +82,6 @@ header {
 }
 
 /* Main */
-
-main {
-    display: grid;
-    grid-template-rows: 6rem 1fr;
-}
 
 .section-one {
     display: flex;
