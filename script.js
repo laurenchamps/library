@@ -152,17 +152,6 @@ function toggleRead(e) {
         e.target.ariaPressed = 'true';
         myLibrary[e.target.parentElement.parentElement.getAttribute('data-index')].isRead = true;
     }
-    // else {
-    //     e.target.ariaPressed = 'true';
-    //     myLibrary[e.target.parentElement.parentElement.getAttribute('data-index')].isRead = true;
-    // }
-    // if(e.target.className.includes('read')) {
-    //     e.target.classList.remove('read');
-    //     myLibrary[e.target.parentElement.parentElement.parentElement.getAttribute('data-index')].isRead = false;
-    // } else {
-    //     e.target.classList.add('read');
-    //     myLibrary[e.target.parentElement.parentElement.parentElement.getAttribute('data-index')].isRead = true;
-    // };
 }
     
 // Event listeners
