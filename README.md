@@ -1,6 +1,6 @@
 # library
-Library project for The Odin Project
+Library project for [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-library).
 
-Initial project without local storage. To be built on further...
+First phase of project complete. Additional features including adding local storage to come.
 
 :point_right: [Live preview](https://spontaneous-sprite-903ef9.netlify.app/)
