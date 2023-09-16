@@ -1,35 +1,14 @@
-const modal = document.querySelector('dialog');
-const openModal = document.querySelector('.open-modal');
-const closeModal = document.querySelector('.close-modal');
-const submit = document.querySelector('#submit');
-const form = document.querySelector('.book-form');
-
-const title = document.getElementById('book-title');
-const author = document.getElementById('book-author');
-const pages = document.getElementById('book-pages');
-const isRead = document.getElementById('read-checkbox');
-
-const cardGroup = document.querySelector('.card-group');
-
-const toggle = document.querySelectorAll('.toggle');
-const removeBtns = document.querySelectorAll('.remove');
-
 class Book {
     constructor(title, author, pages, isRead) {
         this.title = title
         this.author = author
         this.pages = pages
         this.isRead = isRead
+        this.id = ''
     }
 
-    toggleRead(e) {
-        if (e.target.ariaPressed === 'true') {
-            e.target.ariaPressed = 'false';
-            myLibrary[e.target.parentElement.parentElement.getAttribute('data-index')].isRead = false;
-        } else if (e.target.ariaPressed === 'false') {
-            e.target.ariaPressed = 'true';
-            myLibrary[e.target.parentElement.parentElement.getAttribute('data-index')].isRead = true;
-        }
+    updateRead(bool) {
+        this.isRead = bool;
     }
 }
 
@@ -38,12 +17,16 @@ class Library {
         this.books = []
     }
 
-    removeBook(title) {
-        this.books = this.books.filter(book => book.title !== title);
+    removeBook(id) {
+        this.books = this.books.filter(book => book.id !== id);
     }
 
     addBook(newBook) {
         this.books.push(newBook);
+    }
+
+    setIds() {
+        this.books.forEach(function(book, index) { return book.id = index + 1; });
     }
 }
 
@@ -70,90 +53,125 @@ const trial = new Book(
     false
 )
 
-myLibrary.addBook(mountain);
-myLibrary.addBook(wolves);
-myLibrary.addBook(trial);
-
-console.log(myLibrary);
-
-myLibrary.removeBook('The Living Mountain');
-console.log(myLibrary);
 
 
-// displayLibrary() {
-//     // Add card for each book in library
-//     this.books.forEach(function(book, index) {
-        
-//         // Create card and child elements
-//         const card = document.createElement('div');
-//         const title = document.createElement('p');
-//         const author = document.createElement('p');
-//         const pages = document.createElement('p');
-//         const toggleBtn = document.createElement('button');
-//         const removeBtn = document.createElement('button');
-//         const btnGrp = document.createElement('div');
-        
-//         // Set attributes on elements
-//         card.className = 'card';
-//         card.setAttribute('data-index', index);
-//         title.className = 'title';
-//         author.className = 'author';
-//         pages.className = 'pages';
-//         toggleBtn.className = 'toggle';
-//         removeBtn.className = 'remove';
-//         btnGrp.className = 'button-group';
-        
-//         if (book.isRead === true) {
-//             toggleBtn.setAttribute('aria-pressed', true);
-//         } else {
-//             toggleBtn.setAttribute('aria-pressed', false);
-//         }
-        
-//         // Add text 
-//         title.appendChild(document.createTextNode(item.title));
-//         author.appendChild(document.createTextNode(item.author));
-//         pages.appendChild(document.createTextNode(item.pages + ' pages'));
-//         removeBtn.appendChild(document.createTextNode('Remove'));
-        
-//         // Add elements to DOM    
-//         btnGrp.appendChild(toggleBtn);
-//         btnGrp.appendChild(removeBtn);
-        
-//         card.appendChild(title);
-//         card.appendChild(author);
-//         card.appendChild(pages);
-//         card.appendChild(btnGrp);
-        
-//         cardGroup.appendChild(card);
+// Create UI
 
-//         removeBtn.addEventListener('click', removeBookFromLibrary);
-//         toggleBtn.addEventListener('click', toggleRead);
-//     });
-// }
+const modal = document.querySelector('dialog');
+const openModal = document.querySelector('.open-modal');
+const closeModal = document.querySelector('.close-modal');
+const submit = document.querySelector('#submit');
 
-// function getBookInfo(e) {
-//     e.preventDefault();
+const title = document.getElementById('book-title');
+const author = document.getElementById('book-author');
+const pages = document.getElementById('book-pages');
+const isRead = document.getElementById('read-checkbox');
+
+const cardGroup = document.querySelector('.card-group');
+
+const toggle = document.querySelectorAll('.toggle');
+const removeBtns = document.querySelectorAll('.remove');
+
+function titleCaseify(str) {
+    return str
+            .toLowerCase()
+            .split(" ")
+            .map(word => word[0].toUpperCase() + word.slice(1))
+            .join(" ");
+}
+
+function getBookInfo(e) {
+    e.preventDefault();
     
-//         const bookTitle = title.value;
-//         const bookAuthor = author.value;
-//         const bookPages = Number(pages.value);
-//         let bookIsRead = isRead.checked;
+    const bookTitle = titleCaseify(title.value);
+    const bookAuthor = titleCaseify(author.value);
+    const bookPages = Number(pages.value);
+    let bookIsRead = isRead.checked;
+    
+    const newBook = new Book(
+        bookTitle,
+        bookAuthor,
+        bookPages,
+        bookIsRead
+    )
+            
+    if (myLibrary.books.some(item => item.title === bookTitle && item.author === bookAuthor)) {
+        alert('Book already exists in your library') 
+    } else {
+        myLibrary.addBook(newBook);
+    }
+
+        displayLibrary(myLibrary);
+        modal.close();
+
+    }
+
+
+function displayLibrary(library) {
+    // Add card for each book in library
+    myLibrary.setIds();
+
+    library.books.forEach(function(book) {
         
-//         const newBook = new Book(
-//             bookTitle,
-//             bookAuthor,
-//             bookPages,
-//             bookIsRead
-//         )
-            
-//         if (myLibrary.some(item => item.title === bookTitle && item.author === bookAuthor)) {
-//             alert('Book already exists in your library') 
-//         } else {
-//             myLibrary.push(newBook);
-//         }
-            
-//         displayLibrary();
-//         modal.close();
+        // Create card and child elements
+        const card = document.createElement('div');
+        const title = document.createElement('p');
+        const author = document.createElement('p');
+        const pages = document.createElement('p');
+        const toggleBtn = document.createElement('button');
+        const removeBtn = document.createElement('button');
+        const btnGrp = document.createElement('div');
+        
+        // Set attributes on elements
+        card.className = 'card';
+        card.setAttribute('data-index', book.id);
+        title.className = 'title';
+        author.className = 'author';
+        pages.className = 'pages';
+        toggleBtn.className = 'toggle';
+        removeBtn.className = 'remove';
+        btnGrp.className = 'button-group';
+        
+        if (book.isRead === true) {
+            toggleBtn.setAttribute('aria-pressed', true);
+        } else {
+            toggleBtn.setAttribute('aria-pressed', false);
+        }
+        
+        // Add text 
+        title.appendChild(document.createTextNode(book.title));
+        author.appendChild(document.createTextNode(book.author));
+        pages.appendChild(document.createTextNode(book.pages + ' pages'));
+        removeBtn.appendChild(document.createTextNode('Remove'));
+        
+        // Add elements to DOM    
+        btnGrp.appendChild(toggleBtn);
+        btnGrp.appendChild(removeBtn);
+        
+        card.appendChild(title);
+        card.appendChild(author);
+        card.appendChild(pages);
+        card.appendChild(btnGrp);
+        
+        cardGroup.appendChild(card);
+
+        removeBtn.addEventListener('click', deleteBook);
+        // toggleBtn.addEventListener('click', toggleRead);
+    });
+}
+
+function deleteBook(e) {
+    myLibrary.removeBook(Number(e.target.parentElement.parentElement.getAttribute('data-index')));
+    clearBooks();
+    displayLibrary(myLibrary);
+}
+
+function clearBooks() {
+    while (cardGroup.firstElementChild) {
+        cardGroup.removeChild(cardGroup.firstElementChild);
+    }  
+}
+
             
 //         // Reset form values
         
@@ -167,20 +185,36 @@ console.log(myLibrary);
 //         myLibrary.splice(e.target.parentElement.parentElement.getAttribute('data-index'), 1);
 //         myLibrary.displayLibrary();
 //     }
+
+// toggleRead(e) {
+//     if (e.target.ariaPressed === 'true') {
+//         e.target.ariaPressed = 'false';
+//         myLibrary[e.target.parentElement.parentElement.getAttribute('data-index')].isRead = false;
+//     } else if (e.target.ariaPressed === 'false') {
+//         e.target.ariaPressed = 'true';
+//         myLibrary[e.target.parentElement.parentElement.getAttribute('data-index')].isRead = true;
+//     }
+// }
+
+// Add default items
+
+myLibrary.addBook(mountain);
+myLibrary.addBook(wolves);
+myLibrary.addBook(trial);
+
+
+
+console.log(myLibrary);
+displayLibrary(myLibrary);
     
-// // Event listeners
+// Event listeners
     
-// openModal.addEventListener('click', () => {
-//     modal.showModal();
-// })
+openModal.addEventListener('click', () => {
+    modal.showModal();
+})
     
-// closeModal.addEventListener('click', () => {
-//     modal.close();
-// })
+closeModal.addEventListener('click', () => {
+    modal.close();
+})
 
-// form.addEventListener('submit', () => {getBookInfo});
-
-
-
-
-
+document.querySelector('.book-form').addEventListener('submit', getBookInfo);
