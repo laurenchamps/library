@@ -21,8 +21,13 @@ class Library {
         this.books = this.books.filter(book => book.id !== id);
     }
 
-    addBook(newBook) {
+    addBook(newBook, newTitle, newAuthor) {
+        if (this.books.some(item => item.title === newTitle && item.author === newAuthor)) {
+            alert('Book already exists in your library');
+            resetForm();
+        } else {
         this.books.push(newBook);
+        }
     }
 
     setIds() {
@@ -52,8 +57,6 @@ const trial = new Book(
     178,
     false
 )
-
-
 
 // Create UI
 
@@ -94,20 +97,16 @@ function getBookInfo(e) {
         bookPages,
         bookIsRead
     )
-            
-    if (myLibrary.books.some(item => item.title === bookTitle && item.author === bookAuthor)) {
-        alert('Book already exists in your library') 
-    } else {
-        myLibrary.addBook(newBook);
-    }
 
+        myLibrary.addBook(newBook, bookTitle, bookAuthor);
         displayLibrary(myLibrary);
         modal.close();
-
     }
 
 
 function displayLibrary(library) {
+    // Clear existing content
+    clearBooks(library);
     // Add card for each book in library
     myLibrary.setIds();
 
@@ -156,7 +155,7 @@ function displayLibrary(library) {
         cardGroup.appendChild(card);
 
         removeBtn.addEventListener('click', deleteBook);
-        // toggleBtn.addEventListener('click', toggleRead);
+        toggleBtn.addEventListener('click', toggleRead);
     });
 }
 
@@ -172,29 +171,24 @@ function clearBooks() {
     }  
 }
 
-            
-//         // Reset form values
-        
-//         title.value = '';
-//         author.value = '';
-//         pages.value = '';
-//         isRead.checked = false;
-//         }
+function resetForm() {
+    title.value = '';
+    author.value = '';
+    pages.value = '';
+    isRead.checked = false;
+ }
 
-//     removeBookFromLibrary(e) {
-//         myLibrary.splice(e.target.parentElement.parentElement.getAttribute('data-index'), 1);
-//         myLibrary.displayLibrary();
-//     }
+function toggleRead(e) {
+    let index = e.target.parentElement.parentElement.getAttribute('data-index') - 1;
 
-// toggleRead(e) {
-//     if (e.target.ariaPressed === 'true') {
-//         e.target.ariaPressed = 'false';
-//         myLibrary[e.target.parentElement.parentElement.getAttribute('data-index')].isRead = false;
-//     } else if (e.target.ariaPressed === 'false') {
-//         e.target.ariaPressed = 'true';
-//         myLibrary[e.target.parentElement.parentElement.getAttribute('data-index')].isRead = true;
-//     }
-// }
+    if (e.target.ariaPressed === 'true') {
+        e.target.ariaPressed = 'false';
+        myLibrary.books[index].updateRead(false);
+    } else if (e.target.ariaPressed === 'false') {
+        e.target.ariaPressed = 'true';
+        myLibrary.books[index].updateRead(true);
+    }
+}
 
 // Add default items
 
@@ -202,9 +196,6 @@ myLibrary.addBook(mountain);
 myLibrary.addBook(wolves);
 myLibrary.addBook(trial);
 
-
-
-console.log(myLibrary);
 displayLibrary(myLibrary);
     
 // Event listeners
