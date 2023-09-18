@@ -13,6 +13,20 @@
 /* Custom properties */
 
 :root {
+    --primary-bg-color: #061e27;
+    --tertiary-bg-color: #cac7c7;
+    --light-bg-color: #E2E2E2;
+
+    --accent-color: #dc415f;
+    --secondary-accent-color: #59183c;
+    /* #ff5791; */
+
+    --primary-text-color: #F4F6EF;
+    --secondary-text-color: #01161E;
+}
+
+/* Old colour scheme */
+/* :root {
     --primary-bg-color: #124559;
     --secondary-bg-color: #061e27;
     --tertiary-bg-color: #aec3b0;
@@ -21,9 +35,9 @@
     --accent-color: #b33f62;
     /* #ff5791; */
 
-    --primary-text-color: #F4F6EF;
+    /* --primary-text-color: #F4F6EF;
     --secondary-text-color: #01161E;
-}
+} */ 
 
 /* General typography */
 
@@ -76,7 +90,7 @@ footer {
 /* Header */
 
 header {
-    background-color: var(--secondary-bg-color);
+    background-color: var(--primary-bg-color);
     color: var(--primary-text-color);
     padding: 2rem 0;
 }
@@ -135,7 +149,8 @@ button#addBook {
 }
 
 .remove {
-    background-color: #ccc;
+    background-color: var(--secondary-accent-color);
+    color: var(--primary-text-color);
 }
 
 /* Toggle button */
