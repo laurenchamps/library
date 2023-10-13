@@ -13,12 +13,12 @@
 /* Custom properties */
 
 :root {
-    --primary-bg-color: #061e27;
+    --primary-bg-color: #055864;
     --tertiary-bg-color: #cac7c7;
     --light-bg-color: #E2E2E2;
 
     --accent-color: #dc415f;
-    --secondary-accent-color: #59183c;
+    --secondary-accent-color: #B0D0D3;
     /* #ff5791; */
 
     --primary-text-color: #F4F6EF;
@@ -148,7 +148,7 @@ button#addBook {
 
 .remove {
     background-color: var(--secondary-accent-color);
-    color: var(--primary-text-color);
+    color: var(--secondary-text-color);
 }
 
 /* Toggle button */
