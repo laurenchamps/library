@@ -1,64 +1,52 @@
 class Book {
-    constructor(title, author, pages, isRead) {
-        this.title = title
-        this.author = author
-        this.pages = pages
-        this.isRead = isRead
-        this.id = ''
-    }
+  constructor(
+    title = 'Unknown',
+    author = 'Unknown',
+    pages = 0,
+    isRead = false
+  ) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+  }
 
-    updateRead(bool) {
-        this.isRead = bool;
-    }
+  updateRead(bool) {
+    this.isRead = bool;
+  }
 }
 
 class Library {
-    constructor() {
-        this.books = []
-    }
+  constructor() {
+    this.books = [];
+  }
 
-    removeBook(id) {
-        this.books = this.books.filter(book => book.id !== id);
+  addBook(newBook) {
+    if (!this.inLibrary(newBook)) {
+      this.books.push(newBook);
+      addBookToDOM(newBook);
+    } else {
+      alert('Book is already in library');
+      resetForm();
     }
+  }
 
-    addBook(newBook, newTitle, newAuthor) {
-        if (this.books.some(item => item.title === newTitle && item.author === newAuthor)) {
-            alert('Book already exists in your library');
-            resetForm();
-        } else {
-        this.books.push(newBook);
-        }
-    }
+  inLibrary(newBook) {
+    return this.books.some(
+      (book) => book.title === newBook.title && book.author === newBook.author
+    );
+  }
 
-    setIds() {
-        this.books.forEach(function(book, index) { return book.id = index + 1; });
-    }
+  removeBook(title, author) {
+    this.books = this.books.filter(
+      (book) => book.title !== title && book.author !== author
+    );
+    localStorage.setItem('library', JSON.stringify(library));
+    console.log(library.books);
+  }
 }
 
-const myLibrary = new Library();
-
-const mountain = new Book(
-    'The Living Mountain',
-    'Nan Shepherd',
-    114,
-    true
-)
-
-const wolves = new Book(
-    'Women Who Run With The Wolves',
-    'Clarissa Pinkola Estes',
-    513,
-    true
-)
-
-const trial = new Book(
-    'The Trial',
-    'Franz Kafka',
-    178,
-    false
-)
-
-// Create UI
+const library = new Library();
 
 const modal = document.querySelector('dialog');
 const openModal = document.querySelector('.open-modal');
@@ -76,136 +64,167 @@ const toggle = document.querySelectorAll('.toggle');
 const removeBtns = document.querySelectorAll('.remove');
 
 function titleCaseify(str) {
-    return str
-            .toLowerCase()
-            .split(" ")
-            .map(word => word[0].toUpperCase() + word.slice(1))
-            .join(" ");
+  return str
+    .toLowerCase()
+    .split(' ')
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(' ');
 }
 
-function getBookInfo(e) {
-    e.preventDefault();
-    
-    const bookTitle = titleCaseify(title.value);
-    const bookAuthor = titleCaseify(author.value);
-    const bookPages = Number(pages.value);
-    let bookIsRead = isRead.checked;
-    
-    const newBook = new Book(
-        bookTitle,
-        bookAuthor,
-        bookPages,
-        bookIsRead
-    )
+function onBookSubmit(e) {
+  e.preventDefault();
 
-        myLibrary.addBook(newBook, bookTitle, bookAuthor);
-        displayLibrary(myLibrary);
-        modal.close();
-    }
+  const bookTitle = titleCaseify(title.value);
+  const bookAuthor = titleCaseify(author.value);
+  const bookPages = Number(pages.value);
+  let bookIsRead = isRead.checked;
 
+  const newBook = new Book(bookTitle, bookAuthor, bookPages, bookIsRead);
 
-function displayLibrary(library) {
-    // Clear existing content
-    clearBooks(library);
-    // Add card for each book in library
-    myLibrary.setIds();
+  library.addBook(newBook);
 
-    library.books.forEach(function(book) {
-        
-        // Create card and child elements
-        const card = document.createElement('div');
-        const title = document.createElement('p');
-        const author = document.createElement('p');
-        const pages = document.createElement('p');
-        const toggleBtn = document.createElement('button');
-        const removeBtn = document.createElement('button');
-        const btnGrp = document.createElement('div');
-        
-        // Set attributes on elements
-        card.className = 'card';
-        card.setAttribute('data-index', book.id);
-        title.className = 'title';
-        author.className = 'author';
-        pages.className = 'pages';
-        toggleBtn.className = 'toggle';
-        removeBtn.className = 'remove';
-        btnGrp.className = 'button-group';
-        
-        if (book.isRead === true) {
-            toggleBtn.setAttribute('aria-pressed', true);
-        } else {
-            toggleBtn.setAttribute('aria-pressed', false);
-        }
-        
-        // Add text 
-        title.appendChild(document.createTextNode(book.title));
-        author.appendChild(document.createTextNode(book.author));
-        pages.appendChild(document.createTextNode(book.pages + ' pages'));
-        removeBtn.appendChild(document.createTextNode('Remove'));
-        
-        // Add elements to DOM    
-        btnGrp.appendChild(toggleBtn);
-        btnGrp.appendChild(removeBtn);
-        
-        card.appendChild(title);
-        card.appendChild(author);
-        card.appendChild(pages);
-        card.appendChild(btnGrp);
-        
-        cardGroup.appendChild(card);
+  addLibraryToStorage();
+  resetForm();
+  modal.close();
+}
 
-        removeBtn.addEventListener('click', deleteBook);
-        toggleBtn.addEventListener('click', toggleRead);
-    });
+function getLibraryFromStorage() {
+  if (localStorage.getItem('library') !== null) {
+    library.books = JSON.parse(localStorage.getItem('library')).books;
+  }
+  return library;
+}
+
+function addLibraryToStorage() {
+  localStorage.setItem('library', JSON.stringify(library));
+}
+
+function addBookToDOM(book) {
+  // Create card and child elements
+  const card = document.createElement('div');
+  const title = document.createElement('p');
+  const author = document.createElement('p');
+  const pages = document.createElement('p');
+  const toggleBtn = document.createElement('button');
+  const removeBtn = document.createElement('button');
+  const btnGrp = document.createElement('div');
+  // Set attributes on elements
+  card.className = 'card';
+  title.className = 'title';
+  author.className = 'author';
+  pages.className = 'pages';
+  toggleBtn.className = 'toggle';
+  removeBtn.className = 'remove';
+  btnGrp.className = 'button-group';
+
+  if (book.isRead === true) {
+    toggleBtn.setAttribute('aria-pressed', true);
+  } else {
+    toggleBtn.setAttribute('aria-pressed', false);
+  }
+
+  // Add text
+  title.appendChild(document.createTextNode(book.title));
+  author.appendChild(document.createTextNode(book.author));
+  pages.appendChild(document.createTextNode(book.pages + ' pages'));
+  removeBtn.appendChild(document.createTextNode('Remove'));
+
+  // Add elements to DOM
+  btnGrp.appendChild(toggleBtn);
+  btnGrp.appendChild(removeBtn);
+
+  card.appendChild(title);
+  card.appendChild(author);
+  card.appendChild(pages);
+  card.appendChild(btnGrp);
+
+  cardGroup.appendChild(card);
+
+  removeBtn.addEventListener('click', deleteBook);
+  toggleBtn.addEventListener('click', toggleRead);
 }
 
 function deleteBook(e) {
-    myLibrary.removeBook(Number(e.target.parentElement.parentElement.getAttribute('data-index')));
-    clearBooks();
-    displayLibrary(myLibrary);
+  const title =
+    e.target.parentElement.parentElement.querySelector('.title').textContent;
+  const author =
+    e.target.parentElement.parentElement.querySelector('.author').textContent;
+
+  library.removeBook(title, author);
+
+  clearBooks();
+  library.books.forEach((book) => addBookToDOM(book));
 }
 
 function clearBooks() {
-    while (cardGroup.firstElementChild) {
-        cardGroup.removeChild(cardGroup.firstElementChild);
-    }  
+  while (cardGroup.firstElementChild) {
+    cardGroup.removeChild(cardGroup.firstElementChild);
+  }
 }
 
 function resetForm() {
-    title.value = '';
-    author.value = '';
-    pages.value = '';
-    isRead.checked = false;
- }
-
-function toggleRead(e) {
-    let index = e.target.parentElement.parentElement.getAttribute('data-index') - 1;
-
-    if (e.target.ariaPressed === 'true') {
-        e.target.ariaPressed = 'false';
-        myLibrary.books[index].updateRead(false);
-    } else if (e.target.ariaPressed === 'false') {
-        e.target.ariaPressed = 'true';
-        myLibrary.books[index].updateRead(true);
-    }
+  title.value = '';
+  author.value = '';
+  pages.value = '';
+  isRead.checked = false;
 }
 
-// Add default items
+function toggleRead(e) {
+  const title =
+    e.target.parentElement.parentElement.querySelector('.title').textContent;
+  const author =
+    e.target.parentElement.parentElement.querySelector('.author').textContent;
 
-myLibrary.addBook(mountain);
-myLibrary.addBook(wolves);
-myLibrary.addBook(trial);
+  library.books.forEach((book) => {
+    if (book.title === title && book.author === author) {
+      if (e.target.ariaPressed === 'true') {
+        book.isRead = false;
+        e.target.ariaPressed = 'false';
+      } else {
+        book.isRead = true;
+        e.target.ariaPressed = 'true';
+      }
+    }
+  });
 
-displayLibrary(myLibrary);
-    
+  addLibraryToStorage();
+}
+
+// function addDefaultBooks() {
+//   const mountain = new Book('The Living Mountain', 'Nan Shepherd', 114, true);
+
+//   const wolves = new Book(
+//     'Women Who Run With The Wolves',
+//     'Clarissa Pinkola Estes',
+//     513,
+//     true
+//   );
+
+//   const trial = new Book('The Trial', 'Franz Kafka', 178, false);
+
+//   const libraryFromStorage = getLibraryFromStorage();
+
+//   console.log(libraryFromStorage);
+
+//   library.addBook(mountain);
+//   library.addBook(wolves);
+//   library.addBook(trial);
+// }
+
+function init() {
+  getLibraryFromStorage();
+
+  //   Display existing books on page
+  library.books.forEach((book) => addBookToDOM(book));
+}
+
 // Event listeners
-    
-openModal.addEventListener('click', () => {
-    modal.showModal();
-})
-    
-closeModal.addEventListener('click', () => {
-    modal.close();
-})
 
-document.querySelector('.book-form').addEventListener('submit', getBookInfo);
+openModal.addEventListener('click', () => {
+  modal.showModal();
+});
+closeModal.addEventListener('click', () => {
+  modal.close();
+});
+document.querySelector('.book-form').addEventListener('submit', onBookSubmit);
+document.addEventListener('DOMContentLoaded', init);
