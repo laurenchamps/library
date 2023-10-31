@@ -48,8 +48,6 @@ class Library {
 
 const library = new Library();
 
-// Create UI
-
 const modal = document.querySelector('dialog');
 const openModal = document.querySelector('.open-modal');
 const closeModal = document.querySelector('.close-modal');
@@ -84,11 +82,8 @@ function onBookSubmit(e) {
   const newBook = new Book(bookTitle, bookAuthor, bookPages, bookIsRead);
 
   library.addBook(newBook);
-  console.log(library);
 
-  //   Add new library to local storage
-  localStorage.setItem('library', JSON.stringify(library));
-
+  addLibraryToStorage();
   resetForm();
   modal.close();
 }
@@ -97,8 +92,11 @@ function getLibraryFromStorage() {
   if (localStorage.getItem('library') !== null) {
     library.books = JSON.parse(localStorage.getItem('library')).books;
   }
-
   return library;
+}
+
+function addLibraryToStorage() {
+  localStorage.setItem('library', JSON.stringify(library));
 }
 
 function addBookToDOM(book) {
@@ -146,10 +144,6 @@ function addBookToDOM(book) {
   toggleBtn.addEventListener('click', toggleRead);
 }
 
-function addLibraryToStorage() {
-  localStorage.setItem('library', JSON.stringify(library));
-}
-
 function deleteBook(e) {
   const title =
     e.target.parentElement.parentElement.querySelector('.title').textContent;
@@ -193,7 +187,7 @@ function toggleRead(e) {
     }
   });
 
-  localStorage.setItem('library', JSON.stringify(library));
+  addLibraryToStorage();
 }
 
 // function addDefaultBooks() {
