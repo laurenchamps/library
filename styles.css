@@ -135,7 +135,7 @@ footer {
 button.toggle {
     background-color: var(--primary-bg-color);
     color: var(--primary-text-color);
-    width: 150px;
+    width: 170px;
     display: flex;
     justify-content: space-between;
     align-items: center;
