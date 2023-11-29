@@ -89,6 +89,14 @@ function onBookSubmit(e) {
 }
 
 function getLibraryFromStorage() {
+  if (!localStorage.getItem('library')) {
+    const nineteen84 = new Book('Nineteen Eighty-Four', 'George Orwell', 356, true);
+    const girl = new Book('Girl, Woman, Other', 'Bernadine Evaristo', 464, true);
+    const overstory = new Book('The Overstory', 'Richard Powers', 625, false);
+
+    library.books = [nineteen84, girl, overstory]; 
+  };
+
   if (localStorage.getItem('library') !== null) {
     library.books = JSON.parse(localStorage.getItem('library')).books;
   }
@@ -190,26 +198,26 @@ function toggleRead(e) {
   addLibraryToStorage();
 }
 
-// function addDefaultBooks() {
-//   const mountain = new Book('The Living Mountain', 'Nan Shepherd', 114, true);
+function addDefaultBooks() {
+  const mountain = new Book('The Living Mountain', 'Nan Shepherd', 114, true);
 
-//   const wolves = new Book(
-//     'Women Who Run With The Wolves',
-//     'Clarissa Pinkola Estes',
-//     513,
-//     true
-//   );
+  const wolves = new Book(
+    'Women Who Run With The Wolves',
+    'Clarissa Pinkola Estes',
+    513,
+    true
+  );
 
-//   const trial = new Book('The Trial', 'Franz Kafka', 178, false);
+  const trial = new Book('The Trial', 'Franz Kafka', 178, false);
 
-//   const libraryFromStorage = getLibraryFromStorage();
+  const libraryFromStorage = getLibraryFromStorage();
 
-//   console.log(libraryFromStorage);
+  console.log(libraryFromStorage);
 
-//   library.addBook(mountain);
-//   library.addBook(wolves);
-//   library.addBook(trial);
-// }
+  library.addBook(mountain);
+  library.addBook(wolves);
+  library.addBook(trial);
+}
 
 function init() {
   getLibraryFromStorage();
