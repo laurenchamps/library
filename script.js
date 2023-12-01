@@ -1,3 +1,20 @@
+'use strict';
+
+const modal = document.querySelector('dialog');
+const openModal = document.querySelector('.open-modal');
+const closeModal = document.querySelector('.close-modal');
+const submit = document.querySelector('#submit');
+
+const title = document.getElementById('book-title');
+const author = document.getElementById('book-author');
+const pages = document.getElementById('book-pages');
+const isRead = document.getElementById('read-checkbox');
+
+const cardGroup = document.querySelector('.card-group');
+
+const toggle = document.querySelectorAll('.toggle');
+const removeBtns = document.querySelectorAll('.remove');
+
 class Book {
   constructor(
     title = 'Unknown',
@@ -21,49 +38,38 @@ class Library {
     this.books = [];
   }
 
-  addBook(newBook) {
-    if (!this.inLibrary(newBook)) {
-      this.books.push(newBook);
-      addBookToDOM(newBook);
-    } else {
-      alert('Book is already in library');
-      resetForm();
-    }
+  _inLibrary(book) {
+    return this.books.some(
+      b => b.title === book.title && b.author === book.author
+    );
   }
 
-  inLibrary(newBook) {
-    return this.books.some(
-      (book) => book.title === newBook.title && book.author === newBook.author
-    );
+  addBook(book) {
+    if (!this._inLibrary(book)) {
+      this.books.push(book);
+    } else {
+      alert(`${book.title} is already in your library`);
+      resetForm();
+    }
+    return this;
   }
 
   removeBook(title, author) {
     this.books = this.books.filter(
-      (book) => book.title !== title && book.author !== author
+      b => b.title !== title && b.author !== author
     );
-    localStorage.setItem('library', JSON.stringify(library));
-    console.log(library.books);
+  }
+
+  getBooks() {
+    return library.books;
   }
 }
 
 const library = new Library();
 
-const modal = document.querySelector('dialog');
-const openModal = document.querySelector('.open-modal');
-const closeModal = document.querySelector('.close-modal');
-const submit = document.querySelector('#submit');
+// User Interface
 
-const title = document.getElementById('book-title');
-const author = document.getElementById('book-author');
-const pages = document.getElementById('book-pages');
-const isRead = document.getElementById('read-checkbox');
-
-const cardGroup = document.querySelector('.card-group');
-
-const toggle = document.querySelectorAll('.toggle');
-const removeBtns = document.querySelectorAll('.remove');
-
-function titleCaseify(str) {
+const titleCaseify = function(str) {
   return str
     .toLowerCase()
     .split(' ')
@@ -71,159 +77,102 @@ function titleCaseify(str) {
     .join(' ');
 }
 
-function onBookSubmit(e) {
+const createBook = function(e) {
   e.preventDefault();
 
-  const bookTitle = titleCaseify(title.value);
-  const bookAuthor = titleCaseify(author.value);
-  const bookPages = Number(pages.value);
-  let bookIsRead = isRead.checked;
+  const newBook = new Book(titleCaseify(title.value), titleCaseify(author.value), Number(pages.value), isRead.checked);
 
-  const newBook = new Book(bookTitle, bookAuthor, bookPages, bookIsRead);
-
-  library.addBook(newBook);
-
-  addLibraryToStorage();
-  resetForm();
-  modal.close();
+  return newBook;
 }
 
-function getLibraryFromStorage() {
-  if (!localStorage.getItem('library')) {
-    const nineteen84 = new Book('Nineteen Eighty-Four', 'George Orwell', 356, true);
-    const girl = new Book('Girl, Woman, Other', 'Bernadine Evaristo', 464, true);
-    const overstory = new Book('The Overstory', 'Richard Powers', 625, false);
+const setDefaultBooks = function() {
+  const nineteen84 = new Book('Nineteen Eighty-Four', 'George Orwell', 356, true);
+  const girl = new Book('Girl, Woman, Other', 'Bernadine Evaristo', 464, true);
+  const overstory = new Book('The Overstory', 'Richard Powers', 625, false);
 
-    library.books = [nineteen84, girl, overstory]; 
-  };
-
-  if (localStorage.getItem('library') !== null) {
-    library.books = JSON.parse(localStorage.getItem('library')).books;
-  }
-  return library;
+  library.addBook(nineteen84).addBook(girl).addBook(overstory);
 }
 
-function addLibraryToStorage() {
-  localStorage.setItem('library', JSON.stringify(library));
-}
-
-function addBookToDOM(book) {
-  // Create card and child elements
-  const card = document.createElement('div');
-  const title = document.createElement('p');
-  const author = document.createElement('p');
-  const pages = document.createElement('p');
-  const toggleBtn = document.createElement('button');
-  const removeBtn = document.createElement('button');
-  const btnGrp = document.createElement('div');
-  // Set attributes on elements
-  card.className = 'card';
-  title.className = 'title';
-  author.className = 'author';
-  pages.className = 'pages';
-  toggleBtn.className = 'toggle';
-  removeBtn.className = 'remove';
-  btnGrp.className = 'button-group';
-
-  if (book.isRead === true) {
-    toggleBtn.setAttribute('aria-pressed', true);
-  } else {
-    toggleBtn.setAttribute('aria-pressed', false);
-  }
-
-  // Add text
-  title.appendChild(document.createTextNode(book.title));
-  author.appendChild(document.createTextNode(book.author));
-  pages.appendChild(document.createTextNode(book.pages + ' pages'));
-  removeBtn.appendChild(document.createTextNode('Remove'));
-
-  // Add elements to DOM
-  btnGrp.appendChild(toggleBtn);
-  btnGrp.appendChild(removeBtn);
-
-  card.appendChild(title);
-  card.appendChild(author);
-  card.appendChild(pages);
-  card.appendChild(btnGrp);
-
-  cardGroup.appendChild(card);
-
-  removeBtn.addEventListener('click', deleteBook);
-  toggleBtn.addEventListener('click', toggleRead);
-}
-
-function deleteBook(e) {
-  const title =
-    e.target.parentElement.parentElement.querySelector('.title').textContent;
-  const author =
-    e.target.parentElement.parentElement.querySelector('.author').textContent;
-
-  library.removeBook(title, author);
-
-  clearBooks();
-  library.books.forEach((book) => addBookToDOM(book));
-}
-
-function clearBooks() {
+const clearBooks = function() {
   while (cardGroup.firstElementChild) {
     cardGroup.removeChild(cardGroup.firstElementChild);
   }
-}
+};
 
-function resetForm() {
+const toggleRead = function(e, book) {
+  if (e.target.ariaPressed === 'true') {
+    book.updateRead(false);
+    e.target.ariaPressed = 'false';
+  } else {
+    book.updateRead(true);
+    e.target.ariaPressed = 'true';
+  }
+};
+
+const displayBooks = function(library) {
+  library.books.forEach(book => {
+    // Create card and child elements
+    const card = document.createElement('div');
+    const title = document.createElement('p');
+    const author = document.createElement('p');
+    const pages = document.createElement('p');
+    const toggleBtn = document.createElement('button');
+    const removeBtn = document.createElement('button');
+    const btnGrp = document.createElement('div');
+    // Set attributes on elements
+    card.className = 'card';
+    title.className = 'title';
+    author.className = 'author';
+    pages.className = 'pages';
+    toggleBtn.className = 'toggle';
+    removeBtn.className = 'remove';
+    btnGrp.className = 'button-group';
+
+    if (book.isRead === true) {
+      toggleBtn.setAttribute('aria-pressed', true);
+    } else {
+      toggleBtn.setAttribute('aria-pressed', false);
+    }
+
+    // Add text
+    title.appendChild(document.createTextNode(book.title));
+    author.appendChild(document.createTextNode(book.author));
+    pages.appendChild(document.createTextNode(book.pages + ' pages'));
+    removeBtn.appendChild(document.createTextNode('Remove'));
+
+    // Add elements to DOM
+    btnGrp.appendChild(toggleBtn);
+    btnGrp.appendChild(removeBtn);
+
+    card.appendChild(title);
+    card.appendChild(author);
+    card.appendChild(pages);
+    card.appendChild(btnGrp);
+
+    cardGroup.appendChild(card);
+
+    removeBtn.addEventListener('click', function() {
+      library.removeBook(book.title, book.author);
+      clearBooks();
+      displayBooks(library);
+    });
+
+    toggleBtn.addEventListener('click', function(e) {
+      toggleRead(e, book);
+    });
+    }
+  )};
+
+const resetForm = function() {
   title.value = '';
   author.value = '';
   pages.value = '';
   isRead.checked = false;
 }
 
-function toggleRead(e) {
-  const title =
-    e.target.parentElement.parentElement.querySelector('.title').textContent;
-  const author =
-    e.target.parentElement.parentElement.querySelector('.author').textContent;
-
-  library.books.forEach((book) => {
-    if (book.title === title && book.author === author) {
-      if (e.target.ariaPressed === 'true') {
-        book.isRead = false;
-        e.target.ariaPressed = 'false';
-      } else {
-        book.isRead = true;
-        e.target.ariaPressed = 'true';
-      }
-    }
-  });
-
-  addLibraryToStorage();
-}
-
-function addDefaultBooks() {
-  const mountain = new Book('The Living Mountain', 'Nan Shepherd', 114, true);
-
-  const wolves = new Book(
-    'Women Who Run With The Wolves',
-    'Clarissa Pinkola Estes',
-    513,
-    true
-  );
-
-  const trial = new Book('The Trial', 'Franz Kafka', 178, false);
-
-  const libraryFromStorage = getLibraryFromStorage();
-
-  console.log(libraryFromStorage);
-
-  library.addBook(mountain);
-  library.addBook(wolves);
-  library.addBook(trial);
-}
-
-function init() {
-  getLibraryFromStorage();
-
-  //   Display existing books on page
-  library.books.forEach((book) => addBookToDOM(book));
+const init = function() {
+  setDefaultBooks();
+  displayBooks(library);
 }
 
 // Event listeners
@@ -234,5 +183,15 @@ openModal.addEventListener('click', () => {
 closeModal.addEventListener('click', () => {
   modal.close();
 });
-document.querySelector('.book-form').addEventListener('submit', onBookSubmit);
+
+document.querySelector('.book-form').addEventListener('submit', function(e) {
+  library.addBook(createBook(e));
+  clearBooks();
+  displayBooks(library);
+  resetForm();
+  modal.close();
+});
+
 document.addEventListener('DOMContentLoaded', init);
+
+
