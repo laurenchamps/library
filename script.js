@@ -16,7 +16,7 @@ class Book {
     this.isRead = isRead;
   }
 
-  updateRead(bool) {
+  setRead(bool) {
     this.isRead = bool;
     return this;
   }
@@ -144,14 +144,14 @@ class Library {
       toggleBtn.ariaPressed = 'false';
       // Update isRead field in books array
       this.#books.forEach(book => {
-        if(book.id === cardId) book.updateRead(false)
+        if(book.id === cardId) book.setRead(false)
       });
     } else if (toggleBtn.ariaPressed === 'false') {
       // Toggle aria-pressed value
       toggleBtn.ariaPressed = 'true';
       // Update isRead field in books array
       this.#books.forEach(book => {
-        if(book.id === cardId) book.updateRead(true)
+        if(book.id === cardId) book.setRead(true)
       });
     }
   }
