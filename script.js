@@ -1,14 +1,15 @@
 'use strict';
 
 class Book {
-  id = Date.now().toString().slice(-10);
-
+  
   constructor(
+    id = Date.now().toString().slice(-10),
     title = 'Unknown',
     author = 'Unknown',
     pages = 0,
     isRead = false
   ) {
+    this.id = id;
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -35,6 +36,9 @@ class App {
   #books = [];
 
   constructor() {
+    // Get books from local storage
+    this._getLocalStorage();
+
     // Attach event listeners
     addBook.addEventListener('click', this._showForm);
     closeModal.addEventListener('click', () => modal.close());
@@ -74,7 +78,7 @@ class App {
     if(!title || !author) return alert('Please enter title and author');
 
     // Create new book
-    const book = new Book(this._titleCaseify(title), this._titleCaseify(author), pages, isRead);
+    const book = new Book(undefined, this._titleCaseify(title), this._titleCaseify(author), pages, isRead);
     
     // Check for existing book of same name and author
     if(this._inLibrary(book)) return alert(`${book.title} is already in your library`);
@@ -84,6 +88,9 @@ class App {
 
     // Display book on page
     this._renderBook(book);
+
+    // Add to local storage
+    this._setLocalStorage();
 
     // Close modal
     modal.close();
@@ -147,6 +154,35 @@ class App {
     }
   }
 
+  _setLocalStorage() {
+    localStorage.setItem('books', JSON.stringify(this.#books));
+  }
+
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem('books'));
+
+    if(!data) {
+      this._loadDefaultBooks();
+    } else {
+        // Convert book objects back into book class
+    data.forEach((book) => {
+      const newBook = new Book(book.id, book.title, book.author, book.pages, book.isRead);
+      this.#books.push(newBook);
+    })
+    }
+
+    this.#books.forEach(book => this._renderBook(book));    
+  }
+
+  _loadDefaultBooks() {
+    const nineteen84 = new Book('0000000001', 'Nineteen Eighty-Four', 'George Orwell', 356, true);
+    const girl = new Book('0000000002', 'Girl, Woman, Other', 'Bernadine Evaristo', 464, true);
+    const overstory = new Book('0000000003', 'The Overstory', 'Richard Powers', 625, false);
+    
+    this.#books.push(nineteen84);
+    this.#books.push(girl);
+    this.#books.push(overstory);
+  }
 
 }
 
