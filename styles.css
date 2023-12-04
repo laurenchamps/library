@@ -202,26 +202,26 @@ button.toggle {
     opacity: 30%;
 }
 
-.book-form {
+.form {
     display: grid;
     gap: 0.2rem;
 }
 
-.book-form > label,
-.book-form > div,
-.book-form > button {
+.form > label,
+.form > div,
+.form > button {
     margin-block-start: 1rem;
     font-size: 1.2rem;
 }
 
-.book-form input {
+.form input {
     font-size: 1.2rem;
     padding: 0.8rem 1.5rem;
     border: 1px solid #ddd;
     border-radius: 0.5rem;
 }
 
-.book-form button {
+.form button {
     max-width: 90%;
     justify-self: center;
 }
