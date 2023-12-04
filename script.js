@@ -154,6 +154,8 @@ class Library {
         if(book.id === cardId) book.setRead(true)
       });
     }
+
+    localStorage.setItem('books', JSON.stringify(this.#books));
   }
 
   _setLocalStorage() {
