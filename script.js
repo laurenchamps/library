@@ -164,7 +164,7 @@ class Library {
     const data = JSON.parse(localStorage.getItem('books'));
 
     if(!data) {
-      this._loadDefaultBooks();
+      this._setDefaultBooks();
     } else {
         // Convert book objects back into book class
     data.forEach((book) => {
@@ -176,7 +176,7 @@ class Library {
     this.#books.forEach(book => this._renderBook(book));    
   }
 
-  _loadDefaultBooks() {
+  _setDefaultBooks() {
     const nineteen84 = new Book('0000000001', 'Nineteen Eighty-Four', 'George Orwell', 356, true);
     const girl = new Book('0000000002', 'Girl, Woman, Other', 'Bernadine Evaristo', 464, true);
     const overstory = new Book('0000000003', 'The Overstory', 'Richard Powers', 625, false);
