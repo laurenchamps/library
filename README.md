@@ -1,14 +1,17 @@
 # library
 Library project for [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-library) built with HTML, CSS and JavaScript.
 
-Minimalist application allowing a user to add books to or remove books from their library, stored in local storage.
+Minimalist application allowing a user to add and remove books from their library, stored in local storage.
 
 :point_right: [Live preview](https://spontaneous-sprite-903ef9.netlify.app/)
 
-Concepts learnt:
+![Screenshot 2023-12-05 at 1 30 57 pm](https://github.com/laurenchamps/library/assets/96929810/838d9427-fbd5-4e53-a6ae-db64812a6e4d)
+
+Concepts learnt and practised:
 - Object oriented programming
 - ES6 classes
 - CSS grid
+- Local storage
 
 ## Project planning
 
