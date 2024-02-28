@@ -1,242 +1,251 @@
 /* Reset */
 
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    font: inherit;
+  margin: 0;
+  padding: 0;
+  font: inherit;
 }
 
 /* CUSTOM COLOURS */
 
 :root {
-    --primary-bg-color: #f3f3f3;
-    --secondary-bg-color: #444;
-    --light-bg-color: #fff;
+  --primary-bg-color: #f3f3f3;
+  --secondary-bg-color: #444;
+  --light-bg-color: #fff;
 
-    --accent-color: #4E878C;
+  --accent-color: #4e878c;
 
-    --primary-text-color: #01161E;
-    --secondary-text-color: #fff;
+  --primary-text-color: #01161e;
+  --secondary-text-color: #fff;
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 300;
-    background-color: var(--primary-bg-color);
-    color: var(--primary-text-color);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
 }
 
 /* GENERAL ELEMENTS */
 
 h1 {
-    font-size: 2.6rem;
+  font-size: 2.6rem;
 }
 
 a:visited,
 a:link {
-    color: var(--accent-color);
+  color: var(--accent-color);
 }
 
 button {
-    padding: 0.5em 1.8em;
-    border-radius: 5px;
-    background-color: var(--accent-color);
-    color: var(--secondary-text-color);
-    border: none;
-    cursor: pointer;
+  padding: 0.5em 1.8em;
+  border-radius: 5px;
+  background-color: var(--accent-color);
+  color: var(--secondary-text-color);
+  border: none;
+  cursor: pointer;
 }
 
 /* GENERAL LAYOUT */
 
 .container {
-    width: 80%;
-    margin: 0 auto;
+  width: 80%;
+  margin: 0 auto;
 }
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    min-height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 footer {
-    text-align: center;
-    grid-row-start: 3;
-    grid-row-end: 4;
-    padding-top: 2em;
-    padding-bottom: 0.5em;
+  text-align: center;
+  grid-row-start: 3;
+  grid-row-end: 4;
+  padding-top: 2em;
+  padding-bottom: 0.5em;
 }
 
 /* NAVIGATION */
 .nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 9rem;
-    width: 100%;
-    padding: 0 6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 9rem;
+  width: 100%;
+  padding: 0 6rem;
 }
 
 .nav__links {
-    display: flex;
-    align-items: center;
-    list-style: none;
-    font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  font-size: 1.2rem;
 }
 
 /* CARDS */
 
 .card-group {
-    display: grid;
-    gap: 2rem;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    margin-top: 5rem;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 5rem;
 }
 
 .card {
-    background-color: var(--light-bg-color);
-    color: var(--primary-text-color);
-    padding: 1.2rem;
-    font-size: 1.2rem;
+  background-color: var(--light-bg-color);
+  color: var(--primary-text-color);
+  padding: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .card .title {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .button-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
 }
 
 .remove {
-    background-color: var(--light-bg-color);
-    color: var(--primary-text-color);
-    border: 1px solid var(--primary-text-color);
-    padding: 0.2em 1em;
-    font-size: 1rem;
+  background-color: var(--light-bg-color);
+  color: var(--primary-text-color);
+  border: 1px solid var(--primary-text-color);
+  padding: 0.2em 1em;
+  font-size: 1rem;
 }
 
 /* TOGGLE BUTTON */
 
 button.toggle {
-    background-color: var(--primary-bg-color);
-    color: var(--primary-text-color);
-    width: 170px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.2em 0.4em;
-    border-radius: 25px;
-    font-size: 1rem;
+  background-color: var(--primary-bg-color);
+  color: var(--primary-text-color);
+  width: 170px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2em 0.4em;
+  border-radius: 25px;
+  font-size: 1rem;
 }
 
-.toggle::before, 
+.toggle::before,
 .toggle::after {
-    border-radius: 28px;
-    padding: 0.2rem 0.6rem;
+  border-radius: 28px;
+  padding: 0.2rem 0.6rem;
 }
 
 .toggle::before {
-    content: 'read';
+  content: 'read';
 }
 
 .toggle::after {
-    content: 'unread';
+  content: 'unread';
 }
 
-.toggle[aria-pressed="true"].toggle::before,
-.toggle[aria-pressed="false"].toggle::after {
-    background-color: var(--accent-color);
-    color: var(--secondary-text-color);
+.toggle[aria-pressed='true'].toggle::before,
+.toggle[aria-pressed='false'].toggle::after {
+  background-color: var(--accent-color);
+  color: var(--secondary-text-color);
 }
 
 /* MODAL */
 
 .modal {
-    max-width: 80%;
-    margin: 0 auto;
-    background-color: var(--light-bg-color);
-    color: var(--primary-text-color);
-    border: none;
-    padding: 2rem;
-    top: 15%;
+  max-width: 80%;
+  margin: 0 auto;
+  background-color: var(--light-bg-color);
+  color: var(--primary-text-color);
+  border: none;
+  padding: 2rem;
+  top: 15%;
 }
 
 .form-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 5rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 5rem;
 }
 
 .btn-close-modal {
-    background-color: var(--light-bg-color);
-    color: var(--primary-text-color);
-    font-size: 2rem;
-    font-weight: 600;
-    padding: 0;
-    margin: 0;
-    cursor: pointer;
-    align-self: start;
-    margin-top: -1rem;
+  background-color: var(--light-bg-color);
+  color: var(--primary-text-color);
+  font-size: 2rem;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  align-self: start;
+  margin-top: -1rem;
 }
 
 .modal-heading {
-    align-self: end;
-    font-size: 1.5rem;
-    font-weight: 600;
+  align-self: end;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .modal::backdrop {
-    background: #000;
-    opacity: 30%;
+  background: #000;
+  opacity: 30%;
 }
 
 .form {
-    display: grid;
-    gap: 0.2rem;
+  display: grid;
+  gap: 0.2rem;
 }
 
 .form > label,
 .form > div,
 .form > button {
-    margin-block-start: 1rem;
-    font-size: 1.2rem;
+  margin-block-start: 1rem;
+  font-size: 1.2rem;
 }
 
 .form input {
-    font-size: 1.2rem;
-    padding: 0.8rem 1.5rem;
-    border: 1px solid #ddd;
-    border-radius: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
 }
 
 .form button {
-    max-width: 90%;
-    justify-self: center;
+  max-width: 90%;
+  justify-self: center;
 }
 
 .checkbox-input {
-    display: flex;
-    align-items: center;
-    font-size: 1.2rem;
-    gap: 1rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  gap: 1rem;
 }
 
 #read-checkbox {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
+/* MEDIA QUERIES */
 
-
+@media only screen and (max-width: 620px) {
+  .nav {
+    flex-direction: column;
+    padding: 1rem 2rem;
+    gap: 2rem;
+  }
+}
