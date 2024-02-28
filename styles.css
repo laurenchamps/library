@@ -84,7 +84,7 @@ footer {
   align-items: center;
   height: 9rem;
   width: 100%;
-  padding: 0 6rem;
+  padding: 4rem 6rem;
 }
 
 .nav__links {
@@ -245,7 +245,7 @@ button.toggle {
 @media only screen and (max-width: 620px) {
   .nav {
     flex-direction: column;
-    padding: 1rem 2rem;
+    padding: 3rem 2rem;
     gap: 2rem;
   }
 }
