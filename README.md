@@ -1,4 +1,4 @@
-# library
+# my library
 Library project for [The Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-library) built with HTML, CSS and JavaScript.
 
 Minimalist application allowing a user to add and remove books from their library, stored in local storage.
