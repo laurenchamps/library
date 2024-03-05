@@ -3,7 +3,7 @@ Library project for [The Odin Project](https://www.theodinproject.com/lessons/no
 
 Minimalist application allowing a user to add and remove books from their library, stored in local storage.
 
-:point_right: [Live preview](https://spontaneous-sprite-903ef9.netlify.app/)
+:point_right: [Live preview](https://laurenchamps-mylibrary.netlify.app/)
 
 ![Screenshot 2023-12-05 at 1 30 57 pm](https://github.com/laurenchamps/library/assets/96929810/838d9427-fbd5-4e53-a6ae-db64812a6e4d)
 
